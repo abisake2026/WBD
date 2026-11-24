@@ -1,0 +1,142 @@
+/* ===================================================================
+   WELLINGTON BUILDERS - ADVANCED ANIMATIONS & MICRO-INTERACTIONS
+   =================================================================== */
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 0 0 rgba(182, 176, 159, 0.7); }
+  70% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 0 10px rgba(182, 176, 159, 0); }
+  100% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 0 0 rgba(182, 176, 159, 0); }
+}
+
+@keyframes hero-zoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes contact-icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes red-glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(182, 176, 159, 0.2); }
+  50% { box-shadow: 0 0 35px rgba(182, 176, 159, 0.5); }
+}
+
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Micro-interaction classes */
+.hover-float {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-float:hover {
+  transform: translateY(-6px);
+}
+
+.hover-red-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-red-glow:hover {
+  box-shadow: 0 0 25px rgba(182, 176, 159, 0.4);
+  border-color: rgba(182, 176, 159, 0.5);
+}
+
+/* Smooth scroll-reveal states */
+.scroll-reveal,
+.reveal-fade-up {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.scroll-reveal.is-visible,
+.reveal-fade-up.is-inview {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.scroll-reveal.is-visible {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.home-page .category-card.scroll-reveal {
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-fade-up.is-inview {
+  transition-delay: 0ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .reveal-fade-up,
+  .home-page .category-card.scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Shimmer overlay effect for cards */
+.card-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: left 0.8s ease;
+}
+
+.card-shimmer:hover::after {
+  left: 150%;
+}
+
+/* 3D Canvas fade in */
+.canvas-fade-in {
+  opacity: 0;
+  animation: fadeInCanvas 1.2s ease forwards 0.4s;
+}
+
+@keyframes fadeInCanvas {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Reduced Motion Respect */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

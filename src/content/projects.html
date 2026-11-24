@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects | Wellington Builders &amp; Developers Coimbatore – Luxury Apartments, Villas & Plots</title>
+  <meta name="description" content="Explore luxury residential apartments, cantilever villas, gated community plots, and commercial landmarks in Coimbatore by Wellington Builders &amp; Developers.">
+  <meta name="keywords" content="Projects in Coimbatore, Wellington Builders &amp; Developers Projects, Villas in Race Course, Apartments in Peelamedu, Plots in Saravanampatti">
+  <link rel="canonical" href="https://www.wellingtonbuilders.in/projects.html">
+
+  <link rel="icon" type="image/png" href="assets/images/wellington-builders-logo.png">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* ════════════════════════════════════════════════════
+       PROJECT CARDS SLIDER  —  circle arrows + pill dots
+    ════════════════════════════════════════════════════ */
+    .pcs-wrapper { position: relative; margin-top: 48px; }
+
+    /* overflow hidden clips the sliding row */
+    .pcs-viewport {
+      overflow: hidden;
+      cursor: grab;
+      -webkit-user-select: none;
+      user-select: none;
+      border-radius: 12px;
+    }
+    .pcs-viewport.is-grabbing { cursor: grabbing; }
+
+    /* the row that slides left / right */
+    .pcs-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.52s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    /* every project card becomes a fixed-width slide */
+    .pcs-track .project-card {
+      flex-shrink: 0;
+      /* width set by JS per breakpoint */
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .pcs-track .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 44px rgba(0,0,0,0.13);
+    }
+
+    /* centred controls row: ‹  ●  ●  ●  › */
+    .pcs-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 36px;
+    }
+
+    /* circle arrow buttons */
+    .pcs-btn {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,0.18);
+      background: var(--bg-surface-elevated);
+      color: var(--text-primary);
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      transition: background 0.22s ease, border-color 0.22s ease,
+                  color 0.22s ease, transform 0.22s ease,
+                  box-shadow 0.22s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .pcs-btn:hover:not(:disabled) {
+      background: var(--color-red);
+      border-color: var(--color-red);
+      color: var(--color-silk-ivory);
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    }
+    .pcs-btn:disabled { opacity: 0.28; cursor: default; pointer-events: none; }
+
+    /* dots */
+    .pcs-dots { display: flex; align-items: center; gap: 8px; }
+    .pcs-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: none; padding: 0;
+      background: rgba(0,0,0,0.18);
+      cursor: pointer;
+      transition: background 0.25s ease,
+                  width 0.35s cubic-bezier(0.25,0.46,0.45,0.94),
+                  border-radius 0.35s ease;
+    }
+    .pcs-dot.active {
+      background: rgba(0,0,0,0.5);
+      width: 28px;
+      border-radius: 5px;
+    }
+
+    /* hide arrows on very small screens — swipe still works */
+    @media (max-width: 480px) { .pcs-btn { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .pcs-track, .pcs-track .project-card { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header" id="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand-logo" aria-label="Wellington Builders &amp; Developers Home">
+        <img src="assets/images/wellington-builders-logo.png" alt="Wellington Builders &amp; Developers" class="brand-image">
+        <span class="brand-name">
+          <span class="brand-name-primary">Wellington</span>
+          <span class="brand-name-secondary">Builders &amp; Developers</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="projects.html" class="nav-link active">Projects</a></li>
+          <li class="nav-item-dropdown">
+            <a href="services.html" class="nav-link" aria-haspopup="true">Services <i class="fa-solid fa-chevron-down nav-dropdown-icon" aria-hidden="true"></i></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="services.html" class="nav-dropdown-link">Apartment Building</a></li>
+              <li><a href="services.html" class="nav-dropdown-link">Commercial Building</a></li>
+              <li><a href="services.html" class="nav-dropdown-link">Residential Building</a></li>
+              <li><a href="services.html" class="nav-dropdown-link">Educational Building</a></li>
+              <li><a href="services.html" class="nav-dropdown-link">Industrial Building</a></li>
+              <li><a href="services.html" class="nav-dropdown-link">Interior &amp; Painting</a></li>
+              <li><a href="services.html" class="nav-dropdown-link">Waterproofing</a></li>
+              <li><a href="services.html" class="nav-dropdown-link">PEB Structures</a></li>
+            </ul>
+          </li>
+          <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+          <li><a href="testimonials.html" class="nav-link">Testimonials</a></li>
+          <li><a href="faq.html" class="nav-link">FAQ</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">
+          <span>Get In Touch</span>
+          <i class="fa-solid fa-arrow-right btn-icon"></i>
+        </a>
+        <button class="mobile-toggle" aria-label="Open Mobile Menu" id="mobile-toggle-btn">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="mobile-nav-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand-logo">
+        <img src="assets/images/wellington-builders-logo.png" alt="Wellington Builders &amp; Developers" class="brand-image">
+      </div>
+      <button class="mobile-close-btn" id="mobile-close-btn" aria-label="Close Menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link"><span>Home</span> <i class="fa-solid fa-chevron-right"></i></a></li>
+      <li><a href="about.html" class="mobile-nav-link"><span>About Us</span> <i class="fa-solid fa-chevron-right"></i></a></li>
+      <li><a href="projects.html" class="mobile-nav-link active"><span>Projects</span> <i class="fa-solid fa-chevron-right"></i></a></li>
+      <li><a href="services.html" class="mobile-nav-link"><span>Services</span> <i class="fa-solid fa-chevron-right"></i></a></li>
+      <li><a href="gallery.html" class="mobile-nav-link"><span>Gallery</span> <i class="fa-solid fa-chevron-right"></i></a></li>
+      <li><a href="testimonials.html" class="mobile-nav-link"><span>Testimonials</span> <i class="fa-solid fa-chevron-right"></i></a></li>
+      <li><a href="faq.html" class="mobile-nav-link"><span>FAQ</span> <i class="fa-solid fa-chevron-right"></i></a></li>
+      <li><a href="contact.html" class="mobile-nav-link"><span>Contact Us</span> <i class="fa-solid fa-chevron-right"></i></a></li>
+    </ul>
+    <div class="mobile-drawer-footer">
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Veerapandi Pirivu, Coimbatore - 641019<br>Coonoor, Nilgiris</p>
+      <a href="tel:+918056697968" class="btn btn-outline-red btn-sm" style="width:100%;">
+        <i class="fa-solid fa-phone"></i> +91 80566 97968
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- Header Banner -->
+    <section class="projects-hero">
+      <div class="container text-center">
+        <div class="section-tag"><span class="tag-dot"></span> Landmark Portfolio</div>
+        <h1 class="projects-hero-title">Our Real Estate <span class="highlight-red">Developments</span></h1>
+        <p class="projects-hero-description">
+          Explore our portfolio of luxury cantilever villas, sky-residence apartments, gated residential plots, and Grade-A commercial towers across Coimbatore.
+        </p>
+      </div>
+    </section>
+
+    <!-- Projects Filter & Grid Section -->
+    <section style="background:var(--bg-primary); padding:70px 0 100px;">
+      <div class="container">
+
+        <!-- Interactive Category & Status Filters -->
+        <div class="project-filters">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="apartments">Apartments</button>
+          <button class="filter-btn" data-filter="villas">Villas</button>
+          <button class="filter-btn" data-filter="plots">Residential Plots</button>
+          <button class="filter-btn" data-filter="commercial">Commercial</button>
+          <button class="filter-btn" data-filter="residential">Residential</button>
+          <button class="filter-btn" data-filter="construction">Construction</button>
+          <button class="filter-btn" data-filter="ongoing">Ongoing</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+          <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+        </div>
+
+        <!-- Slider wrapper -->
+        <div class="pcs-wrapper">
+          <div class="pcs-viewport" id="pcs-viewport">
+            <div class="pcs-track" id="all-projects-grid" role="list" aria-label="Projects list">
+              <!-- populated by projects.js -->
+            </div>
+          </div>
+          <!-- circle arrows  ·  pill dots  ·  circle arrows -->
+          <div class="pcs-controls">
+            <button class="pcs-btn" id="pcs-prev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="pcs-dots" id="pcs-dots" role="group" aria-label="Slide indicators"></div>
+            <button class="pcs-btn" id="pcs-next" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Load More / Note Strip -->
+        <div style="text-align:center; margin-top:60px;">
+          <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:16px;">
+            Looking for customized land development or joint venture opportunities in Coimbatore?
+          </p>
+          <a href="contact.html" class="btn btn-secondary">
+            <span>Enquire for Custom Plots & Villas</span>
+            <i class="fa-solid fa-arrow-right btn-icon"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta-banner-section">
+      <div class="container">
+        <div class="section-tag"><span class="tag-dot"></span> Personalized Site Visits</div>
+        <h2 class="cta-headline">Schedule a Private Tour in Coimbatore</h2>
+        <p class="cta-text">
+          Our property advisors can arrange a chauffeured site visit to any of our active villa or apartment projects.
+        </p>
+        <a href="contact.html" class="btn btn-primary">
+          <span>Book Property Walkthrough</span>
+          <i class="fa-regular fa-calendar-check btn-icon"></i>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo">
+            <img src="assets/images/wellington-builders-logo.png" alt="Wellington Builders &amp; Developers" class="brand-image">
+          </a>
+          <p>Wellington Builders &amp; Developers is a premium real estate development and luxury construction brand in Coimbatore, Tamil Nadu.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-link"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Properties</h4>
+          <ul class="footer-links">
+            <li><a href="projects.html?cat=apartments">Residential Apartments</a></li>
+            <li><a href="projects.html?cat=villas">Luxury Cantilever Villas</a></li>
+            <li><a href="projects.html?cat=plots">Residential Plots</a></li>
+            <li><a href="projects.html?cat=commercial">Commercial Properties</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Our Locations</h4>
+          <div class="footer-contact-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Veerapandi Pirivu, Coimbatore - 641019; Coonoor, Nilgiris</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <span><a href="tel:+918056697968">+91 80566 97968</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <span>info@wellingtonbuilders.in</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; <span id="current-year">2026</span> Wellington Builders &amp; Developers. All Rights Reserved. Coimbatore, Tamil Nadu.</div>
+        <div class="footer-bottom-links">
+          <a href="faq.html">Privacy</a>
+          <a href="faq.html">Terms</a>
+          <a href="faq.html">RERA</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <a href="https://wa.me/918056697968?text=Hello%20Wellington%20Builders%20%26%20Developers" class="whatsapp-float-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="assets/documents/Wellington_Builders_Sample_Quotation.pdf" class="quotation-float-btn" download="Wellington_Builders_Sample_Quotation.pdf" aria-label="Download sample quotation" title="Download sample quotation"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i></a>
+    <button class="back-to-top-btn"><i class="fa-solid fa-arrow-up"></i></button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/navigation.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+  /* Project Cards Slider – runs after projects.js injects cards */
+  document.addEventListener('DOMContentLoaded', () => {
+    const track    = document.getElementById('all-projects-grid');
+    const viewport = document.getElementById('pcs-viewport');
+    const dotsWrap = document.getElementById('pcs-dots');
+    const prevBtn  = document.getElementById('pcs-prev');
+    const nextBtn  = document.getElementById('pcs-next');
+    if (!track || !viewport) return;
+
+    const GAP = 24;
+    let idx = 0, pages = 1, cardW = 0, perPage = 3, autoId;
+
+    const getPerPage = () => window.innerWidth <= 640 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+
+    const allCards     = () => [...track.querySelectorAll('.project-card')];
+    const visibleCards = () => allCards().filter(c => c.style.display !== 'none');
+
+    function sizeCards() {
+      perPage = getPerPage();
+      cardW   = (viewport.clientWidth - GAP * (perPage - 1)) / perPage;
+      visibleCards().forEach(c => { c.style.width = cardW + 'px'; c.style.flexShrink = '0'; });
+      track.style.gap = GAP + 'px';
+    }
+
+    function buildDots(total) {
+      dotsWrap.innerHTML = '';
+      for (let i = 0; i < total; i++) {
+        const b = document.createElement('button');
+        b.className = 'pcs-dot' + (i === 0 ? ' active' : '');
+        b.setAttribute('aria-label', `Slide ${i + 1}`);
+        b.addEventListener('click', () => goTo(i, true));
+        dotsWrap.appendChild(b);
+      }
+    }
+
+    function goTo(n, resetTimer) {
+      const cards  = visibleCards();
+      const maxIdx = Math.max(0, pages - 1);
+      idx = Math.max(0, Math.min(n, maxIdx));
+      const skip   = Math.min(idx * perPage, Math.max(0, cards.length - perPage));
+      track.style.transform = `translateX(-${skip * (cardW + GAP)}px)`;
+      dotsWrap.querySelectorAll('.pcs-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+      if (prevBtn) prevBtn.disabled = idx === 0;
+      if (nextBtn) nextBtn.disabled = idx >= maxIdx;
+      if (resetTimer) startAuto();
+    }
+
+    function init() {
+      sizeCards();
+      const cards = visibleCards();
+      pages = Math.max(1, Math.ceil(cards.length / perPage));
+      idx   = Math.min(idx, Math.max(0, pages - 1));
+      buildDots(pages);
+      goTo(idx, false);
+    }
+
+    prevBtn?.addEventListener('click', () => goTo(idx - 1, true));
+    nextBtn?.addEventListener('click', () => goTo(idx + 1, true));
+
+    /* touch swipe */
+    let tx0 = 0;
+    viewport.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, { passive: true });
+    viewport.addEventListener('touchend',   e => {
+      const d = tx0 - e.changedTouches[0].clientX;
+      if (Math.abs(d) > 48) goTo(d > 0 ? idx + 1 : idx - 1, true);
+    }, { passive: true });
+
+    /* mouse drag */
+    let drag = false, mx0 = 0, mdx = 0;
+    viewport.addEventListener('mousedown',  e => { drag = true; mx0 = e.clientX; mdx = 0; viewport.classList.add('is-grabbing'); });
+    window  .addEventListener('mousemove',  e => { if (drag) mdx = e.clientX - mx0; });
+    window  .addEventListener('mouseup',    () => {
+      if (!drag) return;
+      drag = false; viewport.classList.remove('is-grabbing');
+      if (Math.abs(mdx) > 60) goTo(mdx < 0 ? idx + 1 : idx - 1, true);
+      mdx = 0;
+    });
+
+    /* auto-play */
+    function startAuto() {
+      clearInterval(autoId);
+      autoId = setInterval(() => goTo(idx + 1 >= pages ? 0 : idx + 1, false), 4500);
+    }
+    viewport.addEventListener('mouseenter', () => clearInterval(autoId));
+    viewport.addEventListener('mouseleave', startAuto);
+
+    /* resize */
+    let rt;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { idx = 0; init(); }, 100); });
+
+    /* re-init after each filter */
+    document.querySelectorAll('.filter-btn').forEach(b =>
+      b.addEventListener('click', () => setTimeout(() => { idx = 0; init(); startAuto(); }, 30))
+    );
+
+    init(); startAuto();
+  });
+  </script>
+</body>
+</html>
