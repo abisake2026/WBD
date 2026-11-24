@@ -82,3 +82,5 @@ The floating quotation-download action links to `assets/documents/Wellington_Bui
    - Semantic HTML5 structure with LocalBusiness JSON-LD schema markup.
    - Search-engine optimized meta tags targeting Coimbatore real estate keywords.
    - XML sitemap (`sitemap.xml`) and `robots.txt`.
+
+# WBD
